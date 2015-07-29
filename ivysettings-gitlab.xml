@@ -1,0 +1,32 @@
+<ivysettings>
+  <property name="ivy.shared.default.root"
+            value="/home/sjeirhvueor/repos" override="true"/>
+  <property name="ivy.shared.default.ivy.pattern"
+            value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]"
+            override="false"/>
+  <property name="ivy.shared.default.artifact.pattern"
+            value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]"
+            override="false"/>
+  <resolvers>
+    <!--
+        <filesystem name="shared">
+        <ivy pattern="${ivy.shared.default.root}/${ivy.shared.default.ivy.pattern}" />
+        <artifact pattern="${ivy.shared.default.root}/${ivy.shared.default.artifact.pattern}" />
+        </filesystem>
+
+        <ssh name="shared" user="kfs" host="192.168.7.242" userPassword="kfs123">
+          <ivy pattern="${ivy.shared.default.root}/${ivy.shared.default.ivy.pattern}" />
+          <artifact pattern="${ivy.shared.default.root}/${ivy.shared.default.artifact.pattern}" />
+        </ssh>
+    -->
+    <ssh name="deploy" host="repos.3zso.com"
+         port="50022" user="sjeirhvueor">
+      <ivy pattern="${ivy.shared.default.root}/${ivy.shared.default.ivy.pattern}" />
+      <artifact pattern="${ivy.shared.default.root}/${ivy.shared.default.artifact.pattern}" />
+    </ssh>
+    <url name="shared"> 
+       <ivy pattern="http://repos.3zso.com/${ivy.shared.default.ivy.pattern}" /> 
+       <artifact pattern="http://repos.3zso.com/${ivy.shared.default.artifact.pattern}" /> 
+     </url>
+  </resolvers>
+</ivysettings>

@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories{
+  mavenCentral()
+}
+
+configurations{
+  ivyconf
+}
+
+dependencies{
+  ivyconf 'org.apache.ivy:ivy:2.3.0-rc1'
+}
+
+ClassLoader antClassLoader = org.apache.tools.ant.Project.class.classLoader
+configurations.ivyconf.each { File f ->
+antClassLoader.addURL(f.toURI().toURL())
+}
+
+ant.importBuild 'build.xml'

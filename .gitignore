@@ -1,0 +1,45 @@
+## folders
+/bin/*
+/build
+/conf
+/dist
+/lib
+/ivy/cache
+.cache
+/.external*
+/plugin/bak
+WebRoot/WEB-INF/lib/
+WebRoot/WEB-INF/classes
+WebContent/WEB-INF/lib
+WebContent/WEB-INF/classes
+
+## files
+/.project
+/.classpath
+.settings
+cobertura.ser
+.checkstyle
+.mymetadata
+*.log
+*.out
+\#*
+*\#
+~*
+*~
+*.log.?
+
+# tmpfiles
+/webapp*
+/bin/*.out
+/bin/*.log
+/bin/pid
+/bin/runserver.xml
+.ant-targets-build.xml
+#prj.el
+*/dist
+*/lib
+/nbproject/private/
+nb-build.xml
+nbbuild.xml
+nbproject
+.gradle

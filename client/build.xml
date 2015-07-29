@@ -1,0 +1,55 @@
+<!DOCTYPE PUBLIC>
+<project name="z-rmi" default="resolve" basedir="."
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+  <description>
+    project description
+  </description>
+
+  <property environment="env" />
+  <property name="lib.dir" value="../WebContent/WEB-INF/lib" />
+  <property name="resolve.shared.settings.file"
+            value="${basedir}/../ivysettings-gitlab.xml" />
+
+  <property name="ivy.settings.dir" value="${basedir}/../plugins/ivy/settings" />
+  <ivy:settings file="${ivy.settings.dir}/ivysettings.xml" />
+
+  <target name="resolve">
+    <ivy:retrieve />
+  </target>
+
+  <property name="client.project.name" value="z-rmiclient" />
+  <target name="client.packagejar" depends="resolve">
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="dist/${client.project.name}/${client.project.name}-${ivy.revision}-jars.jar"
+         basedir="../build/main" includes="**/beans/**,**/client/**"/>
+    <jar jarfile="dist/${client.project.name}/${client.project.name}-${ivy.revision}-sources.jar"
+         basedir="../src"/>
+  </target>
+
+  <target name="client.publish" depends="client.packagejar"
+          description="upload jar to ivy server">
+    <ivy:publish resolver="${resolver}"
+                 organisation="${ivy.organisation}"
+                 module="${client.project.name}"
+                 revision="${ivy.revision}"
+                 pubrevision="${ivy.revision}"
+                 overwrite="true">
+      <artifact name="${client.project.name}" type="jar" ext="jar"/>
+      <artifact name="${client.project.name}" type="source" ext="jar"/>
+      <artifacts pattern="dist/${client.project.name}/[artifact]-[revision]-[type]s.[ext]"/>
+    </ivy:publish>
+  </target>
+
+  <target name="client.install">
+    <antcall target="client.publish">
+      <param name="resolver" value="local" />
+    </antcall>
+  </target>
+
+  <target name="client.deploy">
+    <antcall target="client.publish">
+      <param name="resolver" value="deploy" />
+    </antcall>
+  </target>
+
+</project>

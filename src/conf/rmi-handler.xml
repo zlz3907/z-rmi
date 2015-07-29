@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<!DOCTYPE XMLBean >
+<XMLBean>
+  <rmiHandler class="com.ztools.beans.RmiHandler">
+    <host class="java.lang.String">localhost</host>
+    <port class="java.lang.Integer">9099</port>
+    <name class="java.lang.String">RmiServiceName</name>
+    <key class="java.lang.String">RMI9099</key>
+  </rmiHandler>
+</XMLBean>
