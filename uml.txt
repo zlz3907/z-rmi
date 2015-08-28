@@ -1,0 +1,90 @@
+@startuml
+
+' definitions
+' -----------
+
+' package "com.ztools.rmi.client"
+class RmiClient
+class CfgHandlerFactory
+interface IHandlerFactory
+' end package
+
+' package "com.ztools.rmi.executors"
+class Example
+' end package
+
+' package "com.ztools.rmi.beans"
+class ConfigureKey
+class Task
+enum TaskReturnFormat
+' end package
+
+' package "com.ztools.rmi.service"
+class TaskEngine
+class RmiService
+interface ITaskEngine
+' end package
+
+' content
+' -------
+
+' ITaskEngine:
+ITaskEngine : Object executeTask(Task)
+
+' Example:
+Example : void sayHello()
+Example : void print(String)
+
+' TaskEngine:
+ITaskEngine <|.. TaskEngine
+TaskEngine : Object executeTask(Task)
+TaskEngine : void registryHandler(Object)
+
+' Task:
+Task --> "1" TaskReturnFormat
+Task : String toString()
+Task : String getName()
+Task : void setName(String)
+Task : String getType()
+Task : void setType(String)
+Task : Object getArgs()
+Task : void setArgs(Object)
+Task : TaskReturnFormat getReturnFormat()
+Task : void setReturnFormat(TaskReturnFormat)
+
+' TaskReturnFormat:
+TaskReturnFormat : TaskReturnFormat String
+TaskReturnFormat : TaskReturnFormat XMLString
+TaskReturnFormat : TaskReturnFormat ByteArray
+TaskReturnFormat : TaskReturnFormat Object
+TaskReturnFormat : TaskReturnFormat values()
+TaskReturnFormat : TaskReturnFormat valueOf(String)
+
+' ConfigureKey:
+ConfigureKey : String KEY_CFG_PATH
+ConfigureKey : String KEY_PREFIX_REMOTE_EXECUTOR
+ConfigureKey : String KEY_RMI_HANDLER
+
+' IHandlerFactory:
+IHandlerFactory : RmiHandler fetchHandler()
+IHandlerFactory : void setClazz(Class)
+
+' RmiClient:
+RmiClient --> "1" ITaskEngine
+RmiClient : ITaskEngine findService(boolean)
+RmiClient : Object execute(Task)
+RmiClient : Object execute(Task, boolean)
+RmiClient : Object execute(String, String, Object)
+RmiClient : void main(String)
+
+' CfgHandlerFactory:
+IHandlerFactory <|.. CfgHandlerFactory
+CfgHandlerFactory : Class getClazz()
+CfgHandlerFactory : void setClazz(Class)
+CfgHandlerFactory : RmiHandler fetchHandler()
+
+' RmiService:
+RmiService --> "1" ITaskEngine
+RmiService : void main(String)
+
+@enduml

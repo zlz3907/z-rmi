@@ -181,7 +181,7 @@ public class RmiClient {
   public static void main(String[] args) {
     RmiClient client = new RmiClient();
     try {
-      client.execute(new Task("com.ztools.rmi.executors.Example", "sayHello"));
+      client.execute(new Task("com.ztools.rmi.executors.Example", "sayHello"), true);
       client.execute(new Task("com.ztools.rmi.executors.Example", "print",
           "Hello"));
 

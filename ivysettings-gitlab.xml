@@ -24,9 +24,9 @@
       <ivy pattern="${ivy.shared.default.root}/${ivy.shared.default.ivy.pattern}" />
       <artifact pattern="${ivy.shared.default.root}/${ivy.shared.default.artifact.pattern}" />
     </ssh>
-    <url name="shared"> 
-       <ivy pattern="http://repos.3zso.com/${ivy.shared.default.ivy.pattern}" /> 
-       <artifact pattern="http://repos.3zso.com/${ivy.shared.default.artifact.pattern}" /> 
+    <url name="shared">
+       <ivy pattern="http://repos.3zso.com/${ivy.shared.default.ivy.pattern}" />
+       <artifact pattern="http://repos.3zso.com/${ivy.shared.default.artifact.pattern}" />
      </url>
   </resolvers>
 </ivysettings>
