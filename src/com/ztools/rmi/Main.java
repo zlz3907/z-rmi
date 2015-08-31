@@ -1,5 +1,8 @@
 package com.ztools.rmi;
 
+import com.ztools.rmi.service.RmiService;
+import com.ztools.rmi.client.RmiClient;
+
 public class Main {
   public static void main(String[] args) {
     System.out.println("开始了");
@@ -11,16 +14,42 @@ public class Main {
       if ("-s".equals(arg) || "--server".equals(arg)) {
         // TODO: start services
         System.out.println("start service...");
+        RmiService.main(args);
         i++; // shift
-        continue;
+        break;
       } else if ("-e".equals(arg) || "--execute".equals(arg)) {
         // -e <handler_name> [arg1 arg2 ...]
         System.out.println("execute: ...");
+        sendExecuteTask(args, false);
         break;
       } else if ("-w".equals(arg) || "--waitexe".equals(arg)) {
         System.out.println("waiting response: ...");
         break;
       }
     }
+  }
+
+  private static void sendExecuteTask(final String[] args, boolean isWait) {
+    RmiClient client = new RmiClient();
+    String handler = null;
+    String requestMethod = null;
+    String taskArgs = null;
+    for (int i = 0; (null != args) && i < args.length;) {
+      String arg = args[i];
+      if ("-h".equals(arg) || "--handler".equals(arg)) {
+        handler = arg;
+        i++; // shift
+        continue;
+      } else if ("-m".equals(arg) || "--method".equals(arg)) {
+        requestMethod = arg;
+        i++;
+        continue;
+      } else if ("-a".equals(arg) || "--args".equals(arg)) {
+        i++;
+        // 构造Task并提交执行
+        break;
+      }
+    }
+
   }
 }

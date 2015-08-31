@@ -43,3 +43,7 @@ nb-build.xml
 nbbuild.xml
 nbproject
 .gradle
+
+/GTAGS
+/GPATH
+/GRTAGS

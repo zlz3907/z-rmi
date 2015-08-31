@@ -21,12 +21,18 @@ public class RmiService {
   //private static final String RMIHDL_PATH = "cfg.xml.ztools.z-rmi.rmihandler";
   private static ITaskEngine engine;
 
-  private static Object[] fetchRemoteExecutors() {
+  private static Object[] fetchRemoteExecutors(final String cfgPath) {
     // 获取这个项目的配置文件路径
-    String cfgFilePath = Configuration
+    String cfgFilePath = null != cfgPath ? cfgPath : Configuration
         .getConfigureFilePath(ConfigureKey.KEY_CFG_PATH);
     // 读取该模块相关的配置文件（这是一个配置入口，原则上代码里只会写死这一个路径)
     Properties prop = ConfigureReader.getPropByFilePath(cfgFilePath, RmiService.class);
+
+    if (null == prop) {
+      LogWrapper.error(RmiService.class, "Configuration file was not found: " +
+                       cfgFilePath);
+      return null;
+    }
 
     // 从配置文件中获取RmiHandler配置文件的路径
     Set<Object> keys = prop.keySet();
@@ -48,19 +54,30 @@ public class RmiService {
     }
     return executors.toArray();
   }
-  
+
   public static void main(String[] args) {
     // if (System.getSecurityManager() == null) {
     // System.setSecurityManager(new SecurityManager());
     // }
-    
-    
+
     // String rmiHdlFile = Configuration.getConfigureFilePath(RMIHDL_PATH);
     //
     // LogWrapper.trace(RmiService.class, "RmiHandleFile: " + rmiHdlFile);
     //
     // Object obj = ConfigureReader.getXmlResourceObjectByPath(rmiHdlFile,
     // ITaskEngine.class);
+
+    String cfgPath = null;
+    for (int i = 0; (null != args) && i < args.length;) {
+      String arg = args[i];
+      if ("-c".equals(arg) || "--conf".equals(arg)) {
+        cfgPath = arg;
+        i++; // shift
+        continue;
+      }
+    }
+
+
     Object obj = new CfgHandlerFactory(RmiService.class).fetchHandler();
     if (obj instanceof RmiHandler)
       try {
@@ -72,9 +89,9 @@ public class RmiService {
         // 安全问题，所有的安全问题（如扩展类是否能被注册
         // 执行等）都交由安全框架统一考虑。
         // User st = new User("Bliss");
-        
-        
-        engine = new TaskEngine(fetchRemoteExecutors());
+
+
+        engine = new TaskEngine(fetchRemoteExecutors(cfgPath));
         System.setProperty(JAVA_RMI_SERVER_HOSTNAME, rmiHandler.getHost());
         LogWrapper.debug(RmiService.class, rmiHandler);
         Registry registry = LocateRegistry.createRegistry(rmiHandler.getPort());
