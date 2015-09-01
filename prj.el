@@ -42,10 +42,10 @@
             (concat prj-working-directory "test/integration")))
 
 (setq prj-classpath
-      (list (concat prj-working-directory "$JAVA_HOME/lib/tools.jar")
-            (concat prj-working-directory "lib")
-            (concat prj-working-directory "build/main")
-            (concat prj-working-directory "build/test")))
+      (list
+       (concat prj-working-directory "lib")
+       (concat prj-working-directory "build/main")
+       (concat prj-working-directory "build/test")))
 
 (jdee-project-file-version "1.0")
 (jdee-set-variables
@@ -69,4 +69,5 @@
                               "jdee" ))
  ;;'(jdee-sourcepath (append prj-global-sourcepath prj-sourcepath))
  )
+
 ;;; prj.el ends here
