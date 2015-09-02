@@ -6,6 +6,89 @@
 
 * 下载和安装（Download and Installation）
 
+** 安装方式一
+   直接下载 = [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][z-rmi-all-1.0.jar]] = 并添加到项目的 ~CLASSPATH~ 中。
+
+** 安装方式二（ivy）
+
+   *注：该项目包暂时发布在内网服务器的资源库中，因此本方法暂只能在公司
+    内部使用。*
+
+   #+BEGIN_SRC xml
+     <!-- 在里的ivy.xml文件里添加下面的内容  -->
+     <dependency org="com.ztools" name="z-rmi" rev="1.0" />
+   #+END_SRC
+
 * 相关配置（Configuration）
+  项目所有的配置文件都在 ~src/conf/~ 文件夹下， 系统启动时默认读取
+  ~src/conf/configuration.cfg~ 文件，这个文件是配置文件的入口，也可以
+  在启动时以参数的形式指定该文件的物理路径。其它配置文件的路径都可以在
+  这个文件里进行配置和修改。
+
+  #+BEGIN_EXAMPLE
+    src/conf
+    ├── configuration.cfg  # 配置文件入口
+    ├── rmi-handler.xml    # RMI主机地址、端口和服务名
+    └── z-rmi.cfg          # RMI服务端任务执行引擎相关配置，可以自行扩展
+  #+END_EXAMPLE
+
+  配置文件都可以用默认的，扩展自己的远程方法时只要按照下面的示例在
+  ~z-rmi.cfg~ 添加相应的内容就可以了：
+
+  #+BEGIN_SRC sh
+    com.ztools.rmi.client.IHandlerFactory = com.ztools.rmi.client.CfgHandlerFactory
+    rmi.handler = conf/rmi-handler.xml
+
+    ## registry executors
+    ## 注意事项
+    #  1. 在这里可以配置你想公开给远程客户端的调用的类;
+    #  2. 引擎只会把公有方法注册到服务列表中供客户端调用;
+    #  3. 目前暂不支持一个类中有相同的方法名;
+    #  4. 注册的类应该有一个默认的构造函数;
+    #
+    ## 配置格式
+    #  <前缀>.<唯一标识> = <完整的类名>
+    #
+    #  <前缀>只能是“remote.executor”
+    #  <唯一标识>可以是任意值，只要不重复就行，但要复合properties文件的基本要求
+    #  <完整的类名>是你想要公开给远程客户端调用的类名
+    #
+    ## 示例
+    #  remote.executor.string = java.util.String
+    remote.executor.example = com.ztools.rmi.executors.Example
+  #+END_SRC
 
 * 使用（Usage）
+
+** 启动服务
+   命令行启动：
+
+   #+BEGIN_SRC sh
+     java -cp z-rmi-all-1.0.jar:yourlib/* com.ztools.rmi.service.RmiService
+   #+END_SRC
+
+   或：
+
+   #+BEGIN_SRC sh
+     java -jar z-rmi-all-1.0.jar -s
+   #+END_SRC
+
+** 客户端远程方法调用
+   java调用示例：
+
+   #+BEGIN_SRC java
+     public static void main(String[] args) {
+       RmiClient client = new RmiClient();
+       try {
+         String remoteHandler = "com.ztools.rmi.executors.Example";
+         // 调用远程方法并等待服务器返回结果，断线会重新连接尝试连接
+         client.execute(new Task(remoteHandler, "sayHello"), true);
+
+         // 调用远程方法，如果服务器异常不会重新连接，直接返回
+         client.execute(new Task(remoteHandler, "print", "Hello"));
+       } catch (Exception e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+       }
+     }
+   #+END_SRC
