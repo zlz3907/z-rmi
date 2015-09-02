@@ -2,7 +2,7 @@
 /bin/*
 /build
 /conf
-/dist
+#/dist
 /lib
 /ivy/cache
 .cache

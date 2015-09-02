@@ -1,1 +1,11 @@
 #+title: RMI简单集成
+
+* 关于Z-RMI
+
+** TODO 制作视频演示（配奇迹背景音乐）
+
+* 下载和安装（Download and Installation）
+
+* 相关配置（Configuration）
+
+* 使用（Usage）
