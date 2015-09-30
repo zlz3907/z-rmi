@@ -7,7 +7,10 @@
 * 下载和安装（Download and Installation）
 
 ** 安装方式一
-   直接下载 = [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][z-rmi-all-1.0.jar]] = 并添加到项目的 ~CLASSPATH~ 中。
+   直接下载 [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][z-rmi-all-1.0.jar]] 并添加到项目的 ~CLASSPATH~ 中。
+
+   [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][https://github.com/zlz3907/z-rmi/raw/master/ \
+         dist/z-rmi/z-rmi-all-1.0-jars.jar]]
 
 ** 安装方式二（ivy）
 
@@ -15,7 +18,7 @@
     内部使用。*
 
    #+BEGIN_SRC xml
-     <!-- 在里的ivy.xml文件里添加下面的内容  -->
+     <!-- 在你的ivy.xml文件里添加下面的内容  -->
      <dependency org="com.ztools" name="z-rmi" rev="1.0" />
    #+END_SRC
 
@@ -36,8 +39,10 @@
   ~z-rmi.cfg~ 添加相应的内容就可以了：
 
   #+BEGIN_SRC sh
+    # 三行配置
     com.ztools.rmi.client.IHandlerFactory = com.ztools.rmi.client.CfgHandlerFactory
     rmi.handler = conf/rmi-handler.xml
+    remote.executor.example = com.ztools.rmi.executors.Example
 
     ## registry executors
     ## 注意事项
@@ -55,7 +60,6 @@
     #
     ## 示例
     #  remote.executor.string = java.util.String
-    remote.executor.example = com.ztools.rmi.executors.Example
   #+END_SRC
 
 * 使用（Usage）
