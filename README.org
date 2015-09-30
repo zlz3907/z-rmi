@@ -9,7 +9,7 @@
 ** 安装方式一
    直接下载 [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][z-rmi-all-1.0.jar]] 并添加到项目的 ~CLASSPATH~ 中。
 
-   [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][https://github.com/zlz3907/z-rmi/raw/master/ \
+   [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][https://github.com/zlz3907/z-rmi/raw/master/
          dist/z-rmi/z-rmi-all-1.0-jars.jar]]
 
 ** 安装方式二（ivy）
