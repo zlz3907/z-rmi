@@ -26,4 +26,14 @@
       </jar>
   </target>
 
+  <target name="common.deploy">
+    <antcall target="common.publish">
+      <param name="resolver" value="deploy" />
+    </antcall>
+    <copy includeemptydirs="true" todir="${dist.lib}">
+      <fileset dir="${publish.dir}">
+      </fileset>
+    </copy>
+  </target>
+
 </project>

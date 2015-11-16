@@ -1,0 +1,100 @@
+
+src/com/ztools/rmi/service/ITaskEngine.java,36
+public interface ITaskEngine 8,126
+
+src/com/ztools/rmi/service/RmiService.java,331
+public class RmiService 19,520
+  private static final String JAVA_RMI_SERVER_HOSTNAME RmiService.JAVA_RMI_SERVER_HOSTNAME20,546
+  private static ITaskEngine engine;RmiService.engine22,712
+  private static Object[] fetchRemoteExecutors(RmiService.fetchRemoteExecutors24,750
+  public static void main(RmiService.main58,2083
+
+src/com/ztools/rmi/service/TaskEngine.java,663
+public class TaskEngine 15,343
+  private Logger logger TaskEngine.logger17,393
+  private Map<TaskEngine.Map19,460
+  private Map<String, Object> executeHandlers TaskEngine.executeHandlers19,460
+  private Map<TaskEngine.Map20,539
+  private Map<String, Method> acceptMethod TaskEngine.acceptMethod20,539
+  public TaskEngine(TaskEngine.TaskEngine22,616
+  public TaskEngine(TaskEngine.TaskEngine26,646
+  public TaskEngine(TaskEngine.TaskEngine30,722
+  public Object executeTask(TaskEngine.executeTask39,900
+  public void registryHandler(TaskEngine.registryHandler75,2134
+  private static Method[] extractMethods(TaskEngine.extractMethods92,2703
+
+src/com/ztools/rmi/client/IHandlerFactory.java,39
+public interface IHandlerFactory 5,69
+
+src/com/ztools/rmi/client/CfgHandlerFactory.java,430
+public class CfgHandlerFactory 12,297
+  private Class<?> clazz CfgHandlerFactory.clazz14,358
+  public CfgHandlerFactory(CfgHandlerFactory.CfgHandlerFactory16,411
+  public CfgHandlerFactory(CfgHandlerFactory.CfgHandlerFactory20,491
+  public Class<?> getClazz(CfgHandlerFactory.getClazz26,608
+  public void setClazz(CfgHandlerFactory.setClazz31,674
+  public RmiHandler fetchHandler(CfgHandlerFactory.fetchHandler36,756
+
+src/com/ztools/rmi/client/RmiClient.java,796
+public class RmiClient 17,475
+  private static final String RMIHDL_PATH RmiClient.RMIHDL_PATH18,500
+  private static ITaskEngine controler RmiClient.controler19,571
+  private Class<?> clazz RmiClient.clazz21,619
+  private static Object lock RmiClient.lock23,664
+  private int findCount RmiClient.findCount25,710
+  private RmiHandler rmiHandler RmiClient.rmiHandler27,740
+  public RmiClient(RmiClient.RmiClient29,781
+  public RmiClient(RmiClient.RmiClient33,825
+  public RmiClient(RmiClient.RmiClient37,896
+  public ITaskEngine findService(RmiClient.findService95,2884
+  public Object execute(RmiClient.execute146,4339
+  public Object execute(RmiClient.execute150,4431
+  public Object execute(RmiClient.execute175,5116
+  public static void main(RmiClient.main181,5319
+
+src/com/ztools/rmi/Main.java,135
+public class Main 6,108
+  public static void main(Main.main7,128
+  private static void sendExecuteTask(Main.sendExecuteTask32,966
+
+src/com/ztools/rmi/beans/TaskReturnFormat.java,260
+public enum TaskReturnFormat 3,31
+  String,TaskReturnFormat.String4,62
+  String, XMLString,TaskReturnFormat.XMLString4,62
+  String, XMLString, ByteArray,TaskReturnFormat.ByteArray4,62
+  String, XMLString, ByteArray, Object;TaskReturnFormat.Object4,62
+
+src/com/ztools/rmi/beans/Task.java,834
+public class Task 10,100
+  private static final long serialVersionUID Task.serialVersionUID11,134
+  private String name;Task.name12,185
+  private String type;Task.type13,223
+  private Object[] args;Task.args14,260
+  private TaskReturnFormat returnFormat;Task.returnFormat16,286
+  public Task(Task.Task18,328
+  public Task(Task.Task22,352
+  public Task(Task.Task27,443
+  public String toString(Task.toString34,584
+  public String getName(Task.getName46,883
+  public void setName(Task.setName54,992
+  public String getType(Task.getType61,1090
+  public void setType(Task.setType69,1199
+  public Object[] getArgs(Task.getArgs76,1297
+  public void setArgs(Task.setArgs84,1408
+  public TaskReturnFormat getReturnFormat(Task.getReturnFormat91,1516
+  public void setReturnFormat(Task.setReturnFormat99,1667
+
+src/com/ztools/rmi/beans/ConfigureKey.java,290
+public class ConfigureKey 3,31
+  public static final String KEY_CFG_PATH ConfigureKey.KEY_CFG_PATH4,59
+  public static final String KEY_PREFIX_REMOTE_EXECUTOR ConfigureKey.KEY_PREFIX_REMOTE_EXECUTOR5,128
+  public static final String KEY_RMI_HANDLER ConfigureKey.KEY_RMI_HANDLER6,206
+
+src/com/ztools/rmi/executors/Example.java,114
+public class Example 3,35
+  public void sayHello(Example.sayHello4,58
+  public void print(Example.print8,155
+
+src/com/ztools/rmi/executors/package-info.java,0
+
+src/com/ztools/rmi/beans/package-info.java,0

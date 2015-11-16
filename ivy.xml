@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-  <info organisation="com.ztools" module="z-rmi" revision="1.0">
+  <info organisation="com.ztools" module="z-rmi" revision="1.1">
     <ivyauthor name="Bliss Chung" url="mailto:bliss@3zso.com" />
     <description>
       Describes the current module. This tag is the only one which can contain
@@ -44,7 +44,7 @@
     <dependency org="junit" name="junit" rev="4.8.2" transitive="false" />
 
     <!-- put your dependencies -->
-    <dependency org="com.ztools" name="ztools" rev="1.19" conf="*->default" />
+    <dependency org="com.ztools" name="ztools" rev="1.20" conf="*->default" />
 
     <!-- globe exclude -->
     <!-- <exclude org="*" ext="*" type="source" /> -->

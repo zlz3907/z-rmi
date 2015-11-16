@@ -70,11 +70,13 @@ public class RmiService {
     String cfgPath = null;
     for (int i = 0; (null != args) && i < args.length;) {
       String arg = args[i];
-      if ("-c".equals(arg) || "--conf".equals(arg)) {
-        cfgPath = arg;
-        i++; // shift
-        continue;
-      }
+      if (i < args.length - 1)
+        if ("-c".equals(arg) || "--conf".equals(arg)) {
+          cfgPath = args[++i];
+          //i++; // shift
+          continue;
+        }
+      i++;
     }
 
 

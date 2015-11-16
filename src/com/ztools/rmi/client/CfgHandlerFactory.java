@@ -35,8 +35,10 @@ public class CfgHandlerFactory implements IHandlerFactory {
   @Override
   public RmiHandler fetchHandler() {
     // 获取这个项目的配置文件路径
+    System.out.println("CfgHandlerFactory:debug/> " + ConfigureKey.KEY_CFG_PATH);
     String cfgFilePath = Configuration
         .getConfigureFilePath(ConfigureKey.KEY_CFG_PATH);
+    System.out.println("CfgHandlerFactory:cfgFilePath/> " + cfgFilePath);
     // 读取该模块相关的配置文件（这是一个配置入口，原则上代码里只会写死这一个路径)
     Properties prop = ConfigureReader.getPropByFilePath(cfgFilePath, clazz);
 
