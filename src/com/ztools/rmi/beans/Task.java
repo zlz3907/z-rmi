@@ -34,8 +34,10 @@ public class Task extends ZBean {
   public String toString() {
     StringBuilder sbd = new StringBuilder();
     if (null != args)
-      for (Object o : args)
-        sbd.append(o.toString()).append("/");
+      for (Object o : args) {
+        if (null != o)
+          sbd.append(o.toString()).append("/");
+      }
     return "Task: {type:" + type + ", name:" + name + ", args:"
         + sbd.toString();
   }
