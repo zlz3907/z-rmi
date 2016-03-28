@@ -15,6 +15,7 @@ public class Main {
         // TODO: start services
         System.out.println("start service...");
         RmiService.main(args);
+        RmiService.isConsole = true;
         i++; // shift
         break;
       } else if ("-e".equals(arg) || "--execute".equals(arg)) {
@@ -49,6 +50,20 @@ public class Main {
         // 构造Task并提交执行
         break;
       }
+    }
+
+    if (null != handler && null != requestMethod) {
+      try {
+        System.out.println("----remote method invoke----");
+        System.out.println("handler: " + handler);
+        System.out.println(" method: " + requestMethod);
+        Object obj = client.execute(handler, requestMethod);
+        System.out.println(" result: " + obj);
+        System.out.println("----end----");
+      } catch (Exception ex) {
+        ex.printStackTrace();
+      }
+
     }
 
   }

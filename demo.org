@@ -1,0 +1,27 @@
+#+title: 5分钟搞定RMI（Get Started）
+
+* 下载
+
+  #+BEGIN_SRC sh
+    mkdir $HOME/rmidemo && cd $HOME/rmidemo
+    wget https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar
+  #+END_SRC
+
+* 核对下载的文件是否正确
+
+  #+BEGIN_SRC sh :results raw
+    ls -l $HOME/rmidemo && md5sum $HOME/rmidemo/*
+  #+END_SRC
+
+  #+RESULTS:
+  total 2052
+  -rw-rw-r-- 1 bliss bliss 2099797 Mar 28 18:54 z-rmi-all-1.0-jars.jar
+  77fe9b76c9cf223f79342fa8f4feb1df  /home/bliss/rmidemo/z-rmi-all-1.0-jars.jar
+
+* 启动RMI服务
+
+  #+BEGIN_SRC sh
+  java -jar z-rmi-all-1.0-jars.jar -s
+  #+END_SRC
+
+* 客户端调用远程方法

@@ -1,25 +1,19 @@
-#+title: RMI简单集成
+#+title: Z-RMI (Easy RMI)
 
 * 关于Z-RMI
 
-** TODO 制作视频演示（配奇迹背景音乐）
+  对RMI的简单封闭，简化使用，断线自动重连，不用实现Remote接口，直接通
+  过配置文件来公开已有类的方法供客户端调用。
+
+** TODO 制作视频演示
 
 * 下载和安装（Download and Installation）
 
 ** 安装方式一
    直接下载 [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][z-rmi-all-1.0.jar]] 并添加到项目的 ~CLASSPATH~ 中。
 
-   [[https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.0-jars.jar][https://github.com/zlz3907/z-rmi/raw/master/
-         dist/z-rmi/z-rmi-all-1.0-jars.jar]]
-
-** 安装方式二（ivy）
-
-   *注：该项目包暂时发布在内网服务器的资源库中，因此本方法暂只能在公司
-    内部使用。*
-
-   #+BEGIN_SRC xml
-     <!-- 在你的ivy.xml文件里添加下面的内容  -->
-     <dependency org="com.ztools" name="z-rmi" rev="1.0" />
+   #+BEGIN_SRC sh
+     cp z-rmi-all-1.0.jar path/to/your-project/lib/
    #+END_SRC
 
 * 相关配置（Configuration）

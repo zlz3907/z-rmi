@@ -17,6 +17,8 @@ import com.ztools.rmi.client.CfgHandlerFactory;
 import com.ztools.util.LogWrapper;
 
 public class RmiService {
+  public static boolean isConsole = false;
+
   private static final String JAVA_RMI_SERVER_HOSTNAME = "java.rmi.server.hostname";
   //private static final String RMIHDL_PATH = "cfg.xml.ztools.z-rmi.rmihandler";
   private static ITaskEngine engine;
@@ -29,8 +31,9 @@ public class RmiService {
     Properties prop = ConfigureReader.getPropByFilePath(cfgFilePath, RmiService.class);
 
     if (null == prop) {
-      LogWrapper.error(RmiService.class, "Configuration file was not found: " +
-                       cfgFilePath);
+      if (!isConsole)
+        LogWrapper.error(RmiService.class, "Configuration file was not found: " +
+                         cfgFilePath);
       return null;
     }
 
@@ -40,7 +43,8 @@ public class RmiService {
     for (Object k : keys) {
       if (k.toString().startsWith(ConfigureKey.KEY_PREFIX_REMOTE_EXECUTOR)) {
         String v = prop.getProperty(k.toString());
-        LogWrapper.trace(RmiService.class, "find executor: " + v);
+        if (!isConsole)
+          LogWrapper.trace(RmiService.class, "find executor: " + v);
         try {
           Class<?> c = Class.forName(v);
           Object o = c.newInstance();
@@ -48,7 +52,8 @@ public class RmiService {
         } catch (Exception e) {
           // TODO Auto-generated catch block
           //e.printStackTrace();
-          LogWrapper.error(RmiService.class, e);
+          if (!isConsole)
+            LogWrapper.error(RmiService.class, e);
         }
       }
     }
@@ -95,18 +100,21 @@ public class RmiService {
 
         engine = new TaskEngine(fetchRemoteExecutors(cfgPath));
         System.setProperty(JAVA_RMI_SERVER_HOSTNAME, rmiHandler.getHost());
-        LogWrapper.debug(RmiService.class, rmiHandler);
+        if (!isConsole)
+          LogWrapper.debug(RmiService.class, rmiHandler);
         Registry registry = LocateRegistry.createRegistry(rmiHandler.getPort());
         Remote stub = UnicastRemoteObject.exportObject(engine, 0);
         // registry = LocateRegistry.getRegistry();
 
         registry.bind(rmiHandler.getName(), stub);
-        LogWrapper.info(RmiService.class, "TaskEngine bound");
+        if (!isConsole)
+          LogWrapper.info(RmiService.class, "TaskEngine bound");
 
       } catch (Exception e) {
         // System.err.println("TaskEngine exception:");
         // e.printStackTrace();
-        LogWrapper.error(RmiService.class, e);
+        if (!isConsole)
+          LogWrapper.error(RmiService.class, e);
       }
   }
 }
