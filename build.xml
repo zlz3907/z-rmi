@@ -9,19 +9,16 @@
     <target name="package-jarall" description="jar start">
       <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
       <jar jarfile="${dist.lib}/${project.name}-all-${ivy.revision}-jars.jar"
-           mergeClassPathAttributes="true" >
-        <fileset dir="${build.src.dir}"/>
-        <restrict>
-          <name name="**/*.class"/>
-          <archives>
-            <zips>
-              <fileset dir="lib" includes="*.jar"/>
-            </zips>
-          </archives>
-        </restrict>
+           mergeClassPathAttributes="false"
+           duplicate="preserve">
+        <fileset dir="${build.src.dir}" includes="**/*"/>
+        <zipgroupfileset dir="lib/." />
+        <!-- restrict
+
+        -->
         <manifest>
-          <attribute name="Main-Class"
-                     value="com.ztools.rmi.Main"/>
+          <attribute name="Class-Path" value="lib/"/>
+          <attribute name="Main-Class" value="com.ztools.rmi.Main"/>
         </manifest>
       </jar>
   </target>

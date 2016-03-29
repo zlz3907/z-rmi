@@ -47,3 +47,5 @@ nbproject
 /GTAGS
 /GPATH
 /GRTAGS
+.idea
+*.iml
