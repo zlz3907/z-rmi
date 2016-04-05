@@ -2,11 +2,11 @@ package com.ztools.rmi.executors;
 
 public class Example {
   public void sayHello() {
-    System.out.println("Hello, I'm example remote executor!");
+    System.out.println("RemoteServer:sayHello/> Hello!");
   }
-  
+
   public void print(String str) {
-    System.out.println("print: " + str);
+    System.out.println("RemoteServer:print/> " + str);
   }
 
   public int giveMeDollars() {
