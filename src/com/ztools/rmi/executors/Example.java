@@ -8,4 +8,8 @@ public class Example {
   public void print(String str) {
     System.out.println("print: " + str);
   }
+
+  public int giveMeDollars() {
+    return (int) (Math.random() * Integer.MAX_VALUE);
+  }
 }

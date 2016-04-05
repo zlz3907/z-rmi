@@ -31,7 +31,9 @@ public class Main {
   }
 
   private static void sendExecuteTask(final String[] args, boolean isWait) {
+
     RmiClient client = new RmiClient();
+    System.out.println("debug ....");
     String handler = null;
     String requestMethod = null;
     String taskArgs = null;
@@ -64,6 +66,8 @@ public class Main {
         ex.printStackTrace();
       }
 
+    } else {
+      System.out.println("error!");
     }
 
   }
