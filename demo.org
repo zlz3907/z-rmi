@@ -4,7 +4,7 @@
 
   #+BEGIN_SRC sh
     mkdir $HOME/rmidemo && cd $HOME/rmidemo
-    wget https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.2-jars.jar
+    curl -O https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.2-jars.jar
   #+END_SRC
 
   #+RESULTS:
