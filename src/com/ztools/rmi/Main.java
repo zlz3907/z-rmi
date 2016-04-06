@@ -4,6 +4,7 @@ import com.ztools.rmi.service.RmiService;
 import com.ztools.rmi.client.RmiClient;
 import java.util.List;
 import java.util.ArrayList;
+import com.ztools.rmi.beans.Task;
 
 public class Main {
   public static void main(String[] args) {
@@ -27,6 +28,7 @@ public class Main {
         break;
       } else if ("-w".equals(arg) || "--waitexe".equals(arg)) {
         System.out.println("waiting response: ...");
+        sendExecuteTask(args, true);
         break;
       }
     }
@@ -70,8 +72,9 @@ public class Main {
         System.out.println("----remote method invoke----");
         System.out.println("handler: " + handler);
         System.out.println(" method: " + requestMethod);
-        Object obj = client.execute(handler, requestMethod,
-                                    taskArgs.toArray(new Object[taskArgs.size()]));
+        Task t = new Task(handler, requestMethod,
+                          taskArgs.toArray(new Object[taskArgs.size()]));
+        Object obj = client.execute(t, isWait);
         System.out.println(" result: " + obj);
         System.out.println("----end----");
       } catch (Exception ex) {

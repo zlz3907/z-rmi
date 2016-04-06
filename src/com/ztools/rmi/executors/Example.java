@@ -9,7 +9,7 @@ public class Example {
     System.out.println("RemoteServer:print/> " + str);
   }
 
-  public int giveMeDollars() {
+  public int giveMeNumber() {
     return (int) (Math.random() * Integer.MAX_VALUE);
   }
 }

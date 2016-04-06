@@ -1,13 +1,11 @@
-#+title: 5分钟搞定RMI（Get Started）
+#+title: 5分钟搞定RMI（Get Started RMI in 5 Minutes）
 
 * 下载
 
   #+BEGIN_SRC sh
     mkdir $HOME/rmidemo && cd $HOME/rmidemo
-    curl -O https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.2-jars.jar
+    wget https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.2-jars.jar
   #+END_SRC
-
-  #+RESULTS:
 
 * 核对下载的文件是否正确
 
@@ -17,13 +15,225 @@
 
   #+RESULTS:
   total 2048
-  -rw-rw-r-- 1 bliss bliss 2096187 Mar 29 18:13 z-rmi-all-1.2-jars.jar
-  4675c997e33d894c47cd084367f0c8c0  /home/bliss/rmidemo/z-rmi-all-1.2-jars.jar
+  -rw-rw-r-- 1 bliss bliss 2096416 Apr  6 15:21 z-rmi-all-1.2-jars.jar
+  f490a3f9ee30cd6bb63369e479df338e  /home/bliss/rmidemo/z-rmi-all-1.2-jars.jar
 
-* 启动RMI服务
+* 启动/停止RMI服务
 
-  #+BEGIN_SRC sh
-  java -jar z-rmi-all-1.2-jars.jar -s
-  #+END_SRC
+** 启动RMI
+
+   #+BEGIN_SRC sh :results none
+    cd $HOME/rmidemo
+    # java -jar z-rmi-all-1.2-jars.jar -s
+    # 后台启动
+    nohup java -jar z-rmi-all-1.2-jars.jar -s > server.log 2>&1 &
+    # 记录进程号
+    echo $! > pid
+   #+END_SRC
+
+** 查看日志
+
+   #+BEGIN_SRC sh :results value drawer
+    tail -n 30 $HOME/rmidemo/server.log
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   开始了
+   参数d：-s
+   start service...
+   CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
+   debug:env:/> conf/configuration.cfg
+   ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
+   CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
+   debug:env:/> conf/z-rmi.cfg
+   19:19:02.162 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   debug:env:/> conf/rmi-handler.xml
+   19:19:02.176 [main] TRACE com.ztools.rmi.service.RmiService - find executor: com.ztools.rmi.executors.Example
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.print
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.giveMeDollars
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.sayHello
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.finalize
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
+   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.equals
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.toString
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.hashCode
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.getClass
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.clone
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.registerNatives
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.notify
+   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.notifyAll
+   19:19:02.179 [main] DEBUG com.ztools.rmi.service.RmiService - localhost:9099/RmiServiceName
+   19:19:02.246 [main] INFO  com.ztools.rmi.service.RmiService - TaskEngine bound
+   19:19:25.639 [RMI TCP Connection(2)-127.0.0.1] DEBUG com.ztools.rmi.service.TaskEngine - exe: Task: {type:MyRemoteHandler, name:getStringLength, args:
+   19:19:25.639 [RMI TCP Connection(2)-127.0.0.1] DEBUG com.ztools.rmi.service.TaskEngine - Not found:MyRemoteHandler
+   :END:
+
+** 停止RMI
+
+   #+BEGIN_SRC sh :results value drawer
+    jps
+    cd $HOME/rmidemo
+    if [ -f pid ]
+    then
+        pid=`cat pid`
+        kill -9 $pid
+        echo $pid 'is killed.'
+        rm -f pid
+        if [ $? == 0 ]; then echo 'pid is deleted.';fi
+    else
+        echo 'no search pid file'
+    fi
+    jps
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   3204 Jps
+   3176 Main
+   3176 is killed.
+   3220 Jps
+   :END:
 
 * 客户端调用远程方法
+
+** 调用示例
+
+   #+BEGIN_SRC sh :results value drawer
+    cd $HOME/rmidemo
+    java -jar z-rmi-all-1.2-jars.jar -e com.ztools.rmi.executors.Example \
+         -m giveMeNumber
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   开始了
+   参数d：-e
+   参数d：com.ztools.rmi.executors.Example
+   参数d：-m
+   参数d：giveMeDollars
+   execute: ...
+   18:57:43.921 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
+   debug:env:/> conf/configuration.cfg
+   ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
+   debug:env:/> conf/z-rmi.cfg
+   CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
+   CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
+   18:57:43.926 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   debug:env:/> conf/rmi-handler.xml
+   ----remote method invoke----
+   handler: com.ztools.rmi.executors.Example
+   method: giveMeDollars
+   result: 1848635738
+   ----end----
+   :END:
+
+* 添加一个新的Java类，让客户端来调用
+
+   #+BEGIN_SRC sh :results value drawer
+    cd $HOME/rmidemo/
+
+    # 创建一个普通的Java类
+    cat <<EOF > MyRemoteHandler.java
+    public class MyRemoteHandler {
+      public int getStringLength(final String str) {
+        if (null != str) {
+          return str.length();
+        } else {
+          return -1;
+        }
+      }
+    }
+    EOF
+
+    # 在配置文件里注册该类为一个远程方法执行器
+    cat <<EOF > z-rmi.cfg
+    com.ztools.rmi.client.IHandlerFactory = com.ztools.rmi.client.CfgHandlerFactory
+    rmi.handler = conf/rmi-handler.xml
+    remote.executor.example = com.ztools.rmi.executors.Example
+    remote.executor.myremote = MyRemoteHandler
+    EOF
+
+    ls
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   MyRemoteHandler.class
+   MyRemoteHandler.java
+   server.log
+   z-rmi-all-1.2-jars.jar
+   z-rmi.cfg
+   :END:
+
+** 重启服务，通过参数指定配置文件路径
+
+   #+BEGIN_SRC sh :results none
+     cd $HOME/rmidemo
+     # 通过参数指定rmi配置文件，启动RMI服务，并添加刚创建的类到classpath里
+     nohup java -cp ./:z-rmi-all-1.2-jars.jar \
+           com.ztools.rmi.Main -s -c z-rmi.cfg > server.log 2>&1 &
+     # 记录进程号
+     echo $! > pid
+   #+END_SRC
+
+** 调用 =MyRemoteHandler= 里的 =getStringLength= 方法
+
+   #+BEGIN_SRC sh :results value drawer
+    cd $HOME/rmidemo
+    java -jar z-rmi-all-1.2-jars.jar -e MyRemoteHandler \
+         -m getStringLength "Length?"
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   开始了
+   参数d：-e
+   参数d：MyRemoteHandler
+   参数d：-m
+   参数d：getStringLength
+   参数d：Length?
+   execute: ...
+   19:55:15.043 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
+   debug:env:/> conf/configuration.cfg
+   ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
+   debug:env:/> conf/z-rmi.cfg
+   CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
+   CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
+   19:55:15.049 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   debug:env:/> conf/rmi-handler.xml
+   ----remote method invoke----
+   handler: MyRemoteHandler
+    method: getStringLength
+    result: 7
+   ----end----
+   :END:
+
+* Java API
+
+** 启动RMI服务
+  #+BEGIN_SRC java :exports none :results none
+    // 启动服务
+    com.ztools.rmi.service.RmiService.main(null);
+  #+END_SRC
+
+** 客户端调用
+
+   #+BEGIN_SRC java :exports none :results none
+     public static void main(String[] args) {
+       RmiClient client = new RmiClient();
+       try {
+         String remoteHandler = "com.ztools.rmi.executors.Example";
+         // 调用远程方法并等待服务器返回结果，断线会重新连接尝试连接
+         client.execute(new Task(remoteHandler, "sayHello"), true);
+
+         // 调用远程方法，如果服务器异常不会重新连接，直接返回
+         client.execute(new Task(remoteHandler, "print", "Hello"));
+       } catch (Exception e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+       }
+     }
+   #+END_SRC
