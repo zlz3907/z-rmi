@@ -9,13 +9,12 @@
 
 * 核对下载的文件是否正确
 
-  #+BEGIN_SRC sh :results raw :wrap EXAMPLE
+  #+BEGIN_SRC sh :results output :wrap EXAMPLE
     md5sum $HOME/rmidemo/*
   #+END_SRC
 
-  #+RESULTS:
   #+BEGIN_EXAMPLE
-  a3da54624b92eef5d32778fcaaa2551b  /home/bliss/rmidemo/z-rmi-all-1.2-jars.jar
+  3c565dd31787efdb6c838e0f6f9eb943  /home/bliss/rmidemo/z-rmi-all-1.2-jars.jar
   #+END_EXAMPLE
 
 * 启动/停止RMI服务
@@ -37,7 +36,6 @@
     tail -n 30 $HOME/rmidemo/server.log
    #+END_SRC
 
-   #+RESULTS:
    #+BEGIN_EXAMPLE
    19:54:36.444 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.wait
    19:54:36.444 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.wait
@@ -89,12 +87,11 @@
     jps
    #+END_SRC
 
-   #+RESULTS:
    #+BEGIN_EXAMPLE
-   12288 Main
-   15848 Jps
-   12288 is killed.
-   15864 Jps
+   17480 Jps
+   17268 jar
+   17268 is killed.
+   17496 Jps
    #+END_EXAMPLE
 
 * 客户端调用远程方法
@@ -104,30 +101,28 @@
    #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     cd $HOME/rmidemo
     java -jar z-rmi-all-1.2-jars.jar -e com.ztools.rmi.executors.Example \
-         -m print length
+         -m giveMeNumber
    #+END_SRC
 
-   #+RESULTS:
    #+BEGIN_EXAMPLE
    开始了
    参数d：-e
    参数d：com.ztools.rmi.executors.Example
    参数d：-m
-   参数d：print
-   参数d：length
+   参数d：giveMeNumber
    execute: ...
-   15:14:56.931 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
+   15:36:12.704 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
    debug:env:/> conf/configuration.cfg
    ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
    debug:env:/> conf/z-rmi.cfg
    CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
    CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
-   15:14:56.937 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   15:36:12.711 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
    debug:env:/> conf/rmi-handler.xml
    ----remote method invoke----
    handler: com.ztools.rmi.executors.Example
-    method: print
-    result: null
+    method: giveMeNumber
+    result: 1752968900
    ----end----
    #+END_EXAMPLE
 
@@ -149,6 +144,7 @@
     }
     EOF
 
+    javac MyRemoteHandler.java
     # 在配置文件里注册该类为一个远程方法执行器
     cat <<EOF > z-rmi.cfg
     com.ztools.rmi.client.IHandlerFactory = com.ztools.rmi.client.CfgHandlerFactory
@@ -160,7 +156,6 @@
     ls
    #+END_SRC
 
-   #+RESULTS:
    #+BEGIN_EXAMPLE
    MyRemoteHandler.class
    MyRemoteHandler.java
@@ -185,30 +180,29 @@
    #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     cd $HOME/rmidemo
     java -jar z-rmi-all-1.2-jars.jar -e MyRemoteHandler \
-         -m getStringLength "Length?"
+         -m getStringLength "Length"
    #+END_SRC
 
-   #+RESULTS:
    #+BEGIN_EXAMPLE
    开始了
    参数d：-e
    参数d：MyRemoteHandler
    参数d：-m
    参数d：getStringLength
-   参数d：Length?
+   参数d：Length
    execute: ...
-   13:33:45.862 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
+   15:38:57.718 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
    debug:env:/> conf/configuration.cfg
    ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
    debug:env:/> conf/z-rmi.cfg
    CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
    CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
-   13:33:45.868 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   15:38:57.724 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
    debug:env:/> conf/rmi-handler.xml
    ----remote method invoke----
    handler: MyRemoteHandler
     method: getStringLength
-    result: 7
+    result: 6
    ----end----
    #+END_EXAMPLE
 
