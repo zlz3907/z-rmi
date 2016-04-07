@@ -2,21 +2,21 @@
 
 * 下载
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC sh :results none
     mkdir $HOME/rmidemo && cd $HOME/rmidemo
     wget https://github.com/zlz3907/z-rmi/raw/master/dist/z-rmi/z-rmi-all-1.2-jars.jar
   #+END_SRC
 
 * 核对下载的文件是否正确
 
-  #+BEGIN_SRC sh :results raw
-    ls -l $HOME/rmidemo && md5sum $HOME/rmidemo/*
+  #+BEGIN_SRC sh :results raw :wrap EXAMPLE
+    md5sum $HOME/rmidemo/*
   #+END_SRC
 
   #+RESULTS:
-  total 2048
-  -rw-rw-r-- 1 bliss bliss 2096416 Apr  6 15:21 z-rmi-all-1.2-jars.jar
-  f490a3f9ee30cd6bb63369e479df338e  /home/bliss/rmidemo/z-rmi-all-1.2-jars.jar
+  #+BEGIN_EXAMPLE
+  a3da54624b92eef5d32778fcaaa2551b  /home/bliss/rmidemo/z-rmi-all-1.2-jars.jar
+  #+END_EXAMPLE
 
 * 启动/停止RMI服务
 
@@ -33,47 +33,47 @@
 
 ** 查看日志
 
-   #+BEGIN_SRC sh :results value drawer
+   #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     tail -n 30 $HOME/rmidemo/server.log
    #+END_SRC
 
    #+RESULTS:
-   :RESULTS:
-   开始了
-   参数d：-s
-   start service...
-   CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
-   debug:env:/> conf/configuration.cfg
-   ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
-   CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
-   debug:env:/> conf/z-rmi.cfg
-   19:19:02.162 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
-   debug:env:/> conf/rmi-handler.xml
-   19:19:02.176 [main] TRACE com.ztools.rmi.service.RmiService - find executor: com.ztools.rmi.executors.Example
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.print
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.giveMeDollars
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.sayHello
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.finalize
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
-   19:19:02.177 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.equals
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.toString
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.hashCode
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.getClass
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.clone
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.registerNatives
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.notify
-   19:19:02.178 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.notifyAll
-   19:19:02.179 [main] DEBUG com.ztools.rmi.service.RmiService - localhost:9099/RmiServiceName
-   19:19:02.246 [main] INFO  com.ztools.rmi.service.RmiService - TaskEngine bound
-   19:19:25.639 [RMI TCP Connection(2)-127.0.0.1] DEBUG com.ztools.rmi.service.TaskEngine - exe: Task: {type:MyRemoteHandler, name:getStringLength, args:
-   19:19:25.639 [RMI TCP Connection(2)-127.0.0.1] DEBUG com.ztools.rmi.service.TaskEngine - Not found:MyRemoteHandler
-   :END:
+   #+BEGIN_EXAMPLE
+   19:54:36.444 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.wait
+   19:54:36.444 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.wait
+   19:54:36.444 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.wait
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.equals
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.toString
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.hashCode
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.getClass
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.clone
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.registerNatives
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.notify
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: MyRemoteHandler.notifyAll
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.giveMeDollars
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.sayHello
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.print
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.finalize
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.wait
+   19:54:36.445 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.equals
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.toString
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.hashCode
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.getClass
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.clone
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.registerNatives
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.notify
+   19:54:36.446 [main] INFO  com.ztools.rmi.service.TaskEngine - RRM: com.ztools.rmi.executors.Example.notifyAll
+   19:54:36.447 [main] DEBUG com.ztools.rmi.service.RmiService - localhost:9099/RmiServiceName
+   19:54:36.520 [main] INFO  com.ztools.rmi.service.RmiService - TaskEngine bound
+   19:55:15.201 [RMI TCP Connection(2)-127.0.0.1] DEBUG com.ztools.rmi.service.TaskEngine - exe: Task: {type:MyRemoteHandler, name:getStringLength, args:Length?/
+   20:11:00.438 [RMI TCP Connection(4)-127.0.0.1] DEBUG com.ztools.rmi.service.TaskEngine - exe: Task: {type:MyRemoteHandler, name:getStringLength, args:Length?/
+   #+END_EXAMPLE
 
 ** 停止RMI
 
-   #+BEGIN_SRC sh :results value drawer
+   #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     jps
     cd $HOME/rmidemo
     if [ -f pid ]
@@ -90,49 +90,50 @@
    #+END_SRC
 
    #+RESULTS:
-   :RESULTS:
-   3204 Jps
-   3176 Main
-   3176 is killed.
-   3220 Jps
-   :END:
+   #+BEGIN_EXAMPLE
+   12288 Main
+   15848 Jps
+   12288 is killed.
+   15864 Jps
+   #+END_EXAMPLE
 
 * 客户端调用远程方法
 
 ** 调用示例
 
-   #+BEGIN_SRC sh :results value drawer
+   #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     cd $HOME/rmidemo
     java -jar z-rmi-all-1.2-jars.jar -e com.ztools.rmi.executors.Example \
-         -m giveMeNumber
+         -m print length
    #+END_SRC
 
    #+RESULTS:
-   :RESULTS:
+   #+BEGIN_EXAMPLE
    开始了
    参数d：-e
    参数d：com.ztools.rmi.executors.Example
    参数d：-m
-   参数d：giveMeDollars
+   参数d：print
+   参数d：length
    execute: ...
-   18:57:43.921 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
+   15:14:56.931 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
    debug:env:/> conf/configuration.cfg
    ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
    debug:env:/> conf/z-rmi.cfg
    CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
    CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
-   18:57:43.926 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   15:14:56.937 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
    debug:env:/> conf/rmi-handler.xml
    ----remote method invoke----
    handler: com.ztools.rmi.executors.Example
-   method: giveMeDollars
-   result: 1848635738
+    method: print
+    result: null
    ----end----
-   :END:
+   #+END_EXAMPLE
 
 * 添加一个新的Java类，让客户端来调用
 
-   #+BEGIN_SRC sh :results value drawer
+   #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     cd $HOME/rmidemo/
 
     # 创建一个普通的Java类
@@ -160,13 +161,13 @@
    #+END_SRC
 
    #+RESULTS:
-   :RESULTS:
+   #+BEGIN_EXAMPLE
    MyRemoteHandler.class
    MyRemoteHandler.java
    server.log
    z-rmi-all-1.2-jars.jar
    z-rmi.cfg
-   :END:
+   #+END_EXAMPLE
 
 ** 重启服务，通过参数指定配置文件路径
 
@@ -181,14 +182,14 @@
 
 ** 调用 =MyRemoteHandler= 里的 =getStringLength= 方法
 
-   #+BEGIN_SRC sh :results value drawer
+   #+BEGIN_SRC sh :results raw :wrap EXAMPLE
     cd $HOME/rmidemo
     java -jar z-rmi-all-1.2-jars.jar -e MyRemoteHandler \
          -m getStringLength "Length?"
    #+END_SRC
 
    #+RESULTS:
-   :RESULTS:
+   #+BEGIN_EXAMPLE
    开始了
    参数d：-e
    参数d：MyRemoteHandler
@@ -196,32 +197,32 @@
    参数d：getStringLength
    参数d：Length?
    execute: ...
-   19:55:15.043 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
+   13:33:45.862 [main] TRACE com.ztools.rmi.client.RmiClient - entry params(Initial RmiClient)
    debug:env:/> conf/configuration.cfg
    ConfigureReader:/Key> cfg.prop.ztools.z-rmiconf/z-rmi.cfg
    debug:env:/> conf/z-rmi.cfg
    CfgHandlerFactory:debug/> cfg.prop.ztools.z-rmi
    CfgHandlerFactory:cfgFilePath/> conf/z-rmi.cfg
-   19:55:15.049 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
+   13:33:45.868 [main] TRACE com.ztools.rmi.client.CfgHandlerFactory - RmiHandleFile: conf/rmi-handler.xml
    debug:env:/> conf/rmi-handler.xml
    ----remote method invoke----
    handler: MyRemoteHandler
     method: getStringLength
     result: 7
    ----end----
-   :END:
+   #+END_EXAMPLE
 
 * Java API
 
 ** 启动RMI服务
-  #+BEGIN_SRC java :exports none :results none
+  #+BEGIN_SRC java
     // 启动服务
     com.ztools.rmi.service.RmiService.main(null);
   #+END_SRC
 
 ** 客户端调用
 
-   #+BEGIN_SRC java :exports none :results none
+   #+BEGIN_SRC java
      public static void main(String[] args) {
        RmiClient client = new RmiClient();
        try {
